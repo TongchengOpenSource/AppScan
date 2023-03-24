@@ -46,3 +46,11 @@
   <figcaption>同程安全应急响应中心-公众号</figcaption>
   <img src="./images/wx_group.png" width="200px" />
 </figure>
+
+## 特别致谢
+
+> 开发过程中参考了以下项目的部分代码，特别在此致谢
+
+* https://github.com/zhengjim/camille
+* https://github.com/quasarframework/quasar
+
