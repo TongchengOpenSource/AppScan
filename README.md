@@ -39,6 +39,39 @@
 
 ![!结果展示](./images/dashboard.png)
 
+## 支持的环境
+- windows: 10及以上
+- macOs: 11.0及以上
+- android: 8.x及以上
+- app: 64位/未加固(有时候引入的第三方sdk也会自带一些反检测功能)
+
+## 高级设置
+高级设置中包含了appScan的引擎相关设置, 如您在使用appScan时出现问题可尝试修改, 如可以正常使用强烈建议不要修改其中配置
+- 检测引擎: 默认使用通用引擎,如出现app闪退和抓取不到数据等异常情况可尝试使用特殊引擎(特殊引擎会导致通用引擎下运行正常的某些app出现闪退, 提示安装包损坏等问题)
+- 等待时间: 检测引擎插桩在app启动时的插桩时机, 默认0s即启动时立刻插桩, 如出现插桩失败获取不到数据时可尝试放开时间, 建议在2-3s内尝试
+
+## 报错提交
+如您在使用appScan时遇到问题, 欢迎点击软件左下角的 `...` 更多按钮, 选择 报错提交 项, 然后输入联系方式与错误描述, 点击提交按钮, 会将您的运行日志和相关信息提交给我们, 我们会及时处理并与你联系.
+
+## 注意事项
+
+### 360安全管家会导致appScan无法运行
+有用户反馈360杀毒软件会自动清理appScan的内部可执行文件,导致appScan无法正常运行
+请您注意把appScan加入白名单或者暂时关闭杀软, 防止此类现象发生.
+
+### 不再维护安卓8.0以下版本
+我们发现, 安卓8.0以下的adb命令有所限制, 比如adb命令的长度无法超过32 [android - How can I overcome the property length limitation of the "adb shell setprop" - Stack Overflow](https://stackoverflow.com/questions/5068305/how-can-i-overcome-the-property-length-limitation-of-the-adb-shell-setprop). 因此, 经评估后, 我们决定不再维护安卓8.0以下的版本.
+这并不代表appScan无法运行在安卓8.0以下版本, 你依旧可以使用安卓8.0以下系统, 但是我们不保证功能的可用性, 请知悉
+
+### 关闭Magisk Hide
+Magisk(面具)是时下流行的root管理软件, 我们测试发现, frida在附加进程时, 与Magisk的hide设置冲突, 因此在使用本软件之前, 如果你的Magisk版本小于3.24,请先关闭Magisk的Hide选项, 在Magisk>设置>Magisk Hide
+[Frida and MagiskHide | Markuta](https://markuta.com/frida-and-magisk-hide/)
+
+### 部分手机弹窗提示 Waiting For Debug
+我们发现, 部分手机系统在运行appScan时会出现 Waiting for Debug 弹窗, 但是因为无法复现, 所以目前难以定位问题, 目前已知的会出现此问题的系统有:
+- 魅族x8 安卓版本8.1.0
+如你有同样的问题. 请及时与我们联系, 我们正在排查问题发生的原因以便解决此问题.
+
 ## 联系我们
 <figure>
   <figcaption>加管理微信，拉你进群交流</figcaption>
@@ -54,3 +87,9 @@
 * https://github.com/zhengjim/camille
 * https://github.com/quasarframework/quasar
 
+> appScan的功能更新需要适配流行的安卓版本, 开发者的机器有限, 感谢社区伙伴们的帮助, 提供了更多的安卓版本与机型进行测试,  同时积极的反馈问题. 
+> 这里列举了部分积极帮助我们进行测试的人员名单(微信id). 感谢伙伴们的付出, 帮助appScan成长
+- wenxuanxiaomu
+- FW5215118
+- mOan1215
+- wxid_yrhfgzsdjoj422
