@@ -88,8 +88,9 @@ Magisk(面具)是时下流行的root管理软件, 我们测试发现, frida在�
 
 > 开发过程中参考了以下项目的部分代码，特别在此致谢
 
-* https://github.com/zhengjim/camille
-* https://github.com/quasarframework/quasar
+- https://github.com/zhengjim/camille
+- https://github.com/r0ysue/r0capture
+- https://github.com/hzzheyang/strongR-frida-android
 
 > appScan的功能更新需要适配流行的安卓版本, 开发者的机器有限, 感谢社区伙伴们的帮助, 提供了更多的安卓版本与机型进行测试,  同时积极的反馈问题. 
 > 这里列举了部分积极帮助我们进行测试的人员名单(微信id). 感谢伙伴们的付出, 帮助appScan成长
