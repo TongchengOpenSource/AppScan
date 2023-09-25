@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/tongcheng-security-team/Appscan"><img src="images/AppScan.png" width="30%"  alt="AppScan"></a>
+  <a href="https://github.com/tongcheng-security-team/Appscan"><img src="./doc/image/AppScan.png" width="30%"  alt="AppScan"></a>
 </h1>
 
 ---
@@ -33,11 +33,11 @@
 
 * 连接展示
 
-![!连接展示](./images/connect.png)
+![!连接展示](./doc/image/connect.png)
 
 * 结果展示
 
-![!结果展示](./images/dashboard.png)
+![!结果展示](./doc/image/dashboard.png)
 
 ## 支持的环境
 - windows: 10及以上
@@ -79,9 +79,9 @@ Magisk(面具)是时下流行的root管理软件, 我们测试发现, frida在�
 ## 联系我们
 <figure>
   <figcaption>加管理微信，拉你进群交流</figcaption>
-  <img src="./images/wechat.jpg" width="200px" />
+  <img src="./doc/image/wechat.jpg" width="200px" />
   <figcaption>同程安全应急响应中心-公众号</figcaption>
-  <img src="./images/wx_group.png" width="200px" />
+  <img src="./doc/image/wx_group.png" width="200px" />
 </figure>
 
 ## 特别致谢
