@@ -1,8 +1,8 @@
 ---
-name: "[BUG]"
-about: Bug 反馈
-title: '[BUG]'
-labels: 'bug'
+name: "[功能建议]"
+about: 功能建议
+title: '[功能建议]'
+labels: 'enhancement'
 
 ---
 
@@ -11,14 +11,14 @@ labels: 'bug'
 
 ## 系统版本
 
-电脑版本:
+电脑:
 > 例如 win10
 
-手机型号:
+手机:
 > 例如 红米K40
 
 安卓版本:
 > 例如 安卓11
 
-## Bug 描述
-> 请充分描述Bug的现象和复现步骤
+## 功能建议
+> 请充分描述需求背景和功能描述
