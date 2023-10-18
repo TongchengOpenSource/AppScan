@@ -27,4 +27,4 @@
 3. 执行 `yarn` 安装依赖
 
 ### 启动
-1. 执行 `quasar dev` 启动
+1. 执行 `quasar dev -m electron` 启动(提示找不到quasar请使用 `npx quasar dev -m electron`)

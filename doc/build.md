@@ -12,5 +12,5 @@
 1. 进入view文件夹
 2. 将helper打包生成的文件夹复制到frida-helper文件夹下(mac是frida-helper-mac)
 3. 打开命令行
-4. 执行 `quasar build`
+4. 执行 `npx quasar build -m electron`
 
