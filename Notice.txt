@@ -1,0 +1,2 @@
+Reference r0capture part of the code to help AppScan network capture, project address is: https://github.com/r0ysue/r0capture, protocol Apache 2.0
+Reference camille part of the code to help AppScan permission monitoring, project address is: https://github.com/zhengjim/camille, protocol Apache 2.0

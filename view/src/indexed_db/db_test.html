@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="module">
+    import Dexie from "https://unpkg.com/dexie@latest/dist/modern/dexie.mjs";
+    const db = new Dexie("app-scan");
+    const Checking = 1;
+    const Checked = 2;
+    db.version(1).stores({
+      records:
+        "++id,createdAt,updatedAt,status,appName,appPackage,version,icon,result",
+      method:
+        "++id,createdAt,updatedAt,*recordsID,*main,action,question,data,*type",
+      request:
+        "++id,createdAt,updatedAt,*recordsID,type,status,code,*host,method,request_body,response_body,*session_id,*port",
+    });
+    // 插入隐私调用数据
+    async function insertMethodResult (recordsID, main, action, data) {
+      var now = parseInt(new Date().getTime() / 1000);
+      await db.method.add({
+        createdAt: now,
+        updatedAt: now,
+        recordsID: recordsID,
+        main: main,
+        action: action,
+        data: data,
+        type: "1",
+      });
+    }
+
+    // 查询隐私调用数据
+    // 返回id从大到小的数据
+    // recordsID: 隐私记录 id
+    // startID: 最小的ID, 传0代表无限制
+    async function getMethod (recordsID, startID, startTime, endTime, type, page) {
+      // 多条件查询需要联合索引, 比较麻烦, 这里先代码进行筛选
+      var datas = await db.method
+        .where({
+          recordsID: recordsID,
+        })
+        .reverse()
+        .sortBy("id");
+      var searchData = [];
+      if (startTime == undefined) {
+        startTime = 0;
+      }
+      if (endTime == 0 || endTime == undefined) {
+        endTime = parseInt(new Date().getTime() / 1000);
+      }
+      for (let index = 0; index < datas.length; index++) {
+        const element = datas[index];
+        if (
+          element.createdAt >= startTime &&
+          element.createdAt <= endTime &&
+          element.id > startID
+        ) {
+          if (type != "" && element.type != type) {
+            continue;
+          }
+          searchData.push(element);
+        }
+      }
+      if (page != undefined) {
+        // 分页
+        searchData = searchData.slice((page - 1) * pageSize, page * pageSize);
+      }
+      return searchData;
+    }
+    // 打标
+    async function signQuestion (ID, question) {
+      await db.method.update(ID, {
+        question: question,
+      });
+    }
+    // 检测记录(app)入库
+    async function startPrivacyCheck (appName, appPackage, version, icon) {
+      var now = parseInt(new Date().getTime() / 1000);
+      var id = await db.records.add({
+        createdAt: now,
+        updatedAt: now,
+        status: Checking,
+        appName: appName,
+        appPackage: appPackage,
+        version: version,
+        icon: icon,
+      });
+      return id;
+    }
+    // 获取检测记录(app)
+    // 不带分页
+    async function getPrivacy () {
+      return await db.records.reverse().sortBy("id");
+    }
+
+    async function insertRequestResult (
+      recordsID,
+      type,
+      host,
+      method,
+      request_body,
+      session_id,
+      port,
+      status
+    ) {
+      var now = parseInt(new Date().getTime() / 1000);
+      await db.request.add({
+        createdAt: now,
+        updatedAt: now,
+        type: type, // SSL/HTTP
+        recordsID: recordsID,
+        host: host,
+        method: method,
+        status: status,
+        request_body: request_body,
+        session_id: session_id,
+        port: port,
+      });
+    }
+
+    async function upsertRequestResult (
+      recordsID,
+      type,
+      status,
+      code,
+      response_body,
+      session_id,
+      port
+    ) {
+      var now = parseInt(new Date().getTime() / 1000);
+      if (type == "SSL") {
+        // SSL
+        // session_id 分辨
+        var requestData = await db.request
+          .where({
+            session_id: session_id,
+          })
+          .last();
+        if (requestData == undefined) {
+          // 新增
+          await db.request.add({
+            createdAt: now,
+            updatedAt: now,
+            type: type, // SSL/HTTP
+            recordsID: recordsID,
+            response_body: response_body,
+            session_id: session_id,
+            port: port,
+            status: status,
+          });
+        } else {
+          await db.request.update(requestData.id, {
+            updatedAt: now,
+            response_body: response_body,
+            status: status,
+            code: code,
+          });
+        }
+      } else if (type == "HTTP") {
+        // HTTP
+        // port 分辨
+        var requestData = await db.request
+          .where({
+            port: port,
+          })
+          .last();
+        if (requestData == undefined) {
+          // 新增
+          await db.request.add({
+            createdAt: now,
+            updatedAt: now,
+            type: type, // SSL/HTTP
+            recordsID: recordsID,
+            response_body: response_body,
+            port: port,
+          });
+        } else {
+          await db.request.update(requestData.id, {
+            updatedAt: now,
+            response_body: response_body,
+            status: status,
+            code: code,
+          });
+        }
+      }
+    }
+
+    // 查询抓包数据
+    async function getRequest (recordsID, startID) {
+      // 多条件查询需要联合索引, 比较麻烦, 这里先代码进行筛选
+      var datas = await db.request
+        .where({
+          recordsID: recordsID,
+        })
+        .reverse()
+        .sortBy("id");
+      for (let index = 0; index < datas.length; index++) {
+        const element = datas[index];
+        if (element.id == startID) {
+          return datas.silce(0, index);
+        }
+      }
+    }
+
+
+
+    // 获取数据统计
+    async function getGroup (recordsID, startTime, endTime) {
+      // 多条件查询需要联合索引, 比较麻烦, 这里先代码进行筛选
+      var datas = await db.method
+        .where({
+          recordsID: recordsID,
+        })
+        .reverse()
+        .sortBy("id");
+      var groupData = [{ name: "1", count: 0 }];
+      if (startTime == undefined) {
+        startTime = 0;
+      }
+      if (endTime == 0 || endTime == undefined) {
+        endTime = parseInt(new Date().getTime() / 1000);
+      }
+      for (let index = 0; index < datas.length; index++) {
+        const element = datas[index];
+        if (element.createdAt >= startTime && element.createdAt <= endTime) {
+          for (let index = 0; index < groupData.length; index++) {
+            const group = groupData[index];
+            if (group.name == element.type) {
+              groupData[index].count += 1;
+            }
+          }
+        }
+      }
+      return groupData;
+    }
+
+    var id = await startPrivacyCheck("app", "pkg", "1", "icon")
+    await insertMethodResult(id, "main", "info", "data")
+    await insertMethodResult(id, "main1", "info1", "data1")
+    await insertMethodResult(id, "main2", "info2", "data2")
+    await insertMethodResult(id, "main3", "info3", "data3")
+
+  </script>
+</head>
+
+</html>
