@@ -1,6 +1,6 @@
 {
   "name": "app-scan",
-  "version": "1.0.10",
+  "version": "1.0.09",
   "description": "自动化隐私检测工具",
   "productName": "app-scan",
   "author": "liang.che <liang.che@ly.com>",

@@ -9,13 +9,19 @@ autoUpdater.logger.transports.file.level = "info";
 const isDevelopment = process.env.NODE_ENV !== "production";
 // 检测更新，在你想要检查更新的时候执行，renderer事件触发后的操作自行编写
 export const updateHandle = (mainWindow, osName) => {
-  let uploadUrl = "https://oss.17usoft.com/download/" + osName;
+  // let uploadUrl = "https://oss.17usoft.com/download/" + osName;
 
   if (isDevelopment && !process.env.IS_TEST) {
     // 调试环境
     autoUpdater.currentVersion = config.version;
   }
-  autoUpdater.setFeedURL(uploadUrl);
+  autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'TongchengOpenSource',
+    repo: 'AppScan',
+    private: false,
+    prerelease: false
+  });
   //在下载之前将autoUpdater的autoDownload属性设置成false，通过渲染进程触发主进程事件来实现这一设置
   autoUpdater.autoDownload = false;
 
