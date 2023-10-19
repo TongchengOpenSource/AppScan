@@ -19,12 +19,12 @@
 ## view
 ### 前置条件
 - 本地安装了16.X版本的nodejs
-- 本地安装了yarn
 
 ### 安装依赖
 1. 进入view目录
 2. 打开命令行(或者使用vscode等专业软件打开文件夹)
-3. 执行 `yarn` 安装依赖
+3. 执行 `corepack enable` 开启corepack
+4. 执行 `yarn` 安装依赖
 
 ### 启动
-1. 执行 `quasar dev -m electron` 启动(提示找不到quasar请使用 `npx quasar dev -m electron`)
+1. 执行 `npx quasar dev -m electron` 启动
