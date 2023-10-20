@@ -4,8 +4,10 @@
 > 务必已经布置好了开发环境
 1. 进入 helper 文件夹
 2. 打开命令行
-3. 执行 `pyinstaller ./main.spec`
-4. 打包完成后, 会在 helper/dist 文件夹下生成文件夹, 将文件夹内的所有文件复制备用
+3. 进入虚拟环境 `.\venv\Scripts\activate`
+4. 安装pyinstall `pip install pyinstaller`
+5. 执行 `pyinstaller ./main.spec`
+6. 打包完成后, 会在 helper/dist 文件夹下生成文件夹, 将文件夹内的所有文件复制备用
 
 ## view
 > 务必已经布置好了开发环境
