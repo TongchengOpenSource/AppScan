@@ -166,9 +166,13 @@ function hookApplicationPackageManagerExceptSelf(targetMethod, action) {
                     if (j === 0) {
                         var string_to_recv;
                         send({'type': 'app_name', 'data': arguments[j]});
+                        // recv(function (received_json_object) {
+                        //     string_to_recv = received_json_object.my_data;
+                        // }).wait();
+                        // TODO 模拟器适配
                         recv(function (received_json_object) {
                             string_to_recv = received_json_object.my_data;
-                        }).wait();
+                        });
                     }
                     arg += '参数' + j + '：' + JSON.stringify(arguments[j]) + '\r\n';
                 }
@@ -624,15 +628,22 @@ function useModule(moduleList) {
 
 function main() {
     try {
+        // Java.perform(function () {
+        //     console.log('[*] ' + get_format_time() + ' 隐私合规检测敏感接口开始监控...');
+        //     send({"type": "isHook"})
+        //     console.log('[*] ' + get_format_time() + ' 检测到安卓版本：' + Java.androidVersion);
+        //     var moduleList;
+        //     recv(function (received_json_object) {
+        //         moduleList = received_json_object.use_module;
+        //     }).wait();
+        //     useModule(moduleList);
+        // });
+        // TODO 模拟器适配
         Java.perform(function () {
             console.log('[*] ' + get_format_time() + ' 隐私合规检测敏感接口开始监控...');
             send({"type": "isHook"})
             console.log('[*] ' + get_format_time() + ' 检测到安卓版本：' + Java.androidVersion);
-            var moduleList;
-            recv(function (received_json_object) {
-                moduleList = received_json_object.use_module;
-            }).wait();
-            useModule(moduleList);
+            useModule({"type": "all"});
         });
     } catch (e) {
         console.log(e)
