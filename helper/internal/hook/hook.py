@@ -2,6 +2,7 @@ import time
 import uuid
 import frida
 import logging
+import traceback
 from queue import Queue
 from typing import Optional
 from threading import Thread
@@ -81,11 +82,15 @@ class FridaHook:
                 if not self.is_attach:
                     device.resume(pid)
             except Exception as e:
-                self.queue.put({"type": "helper_error", "data": str(e)})
+                data = traceback.format_exc()
+                logging.error(data)
+                self.queue.put({"type": "helper_error", "data": data})
                 self.wait_time += 1
                 self.stop()
         except Exception as e:
-            self.queue.put({"type": "helper_error", "data": str(e)})
+            data = traceback.format_exc()
+            logging.error(data)
+            self.queue.put({"type": "helper_error", "data": data})
             self.stop()
 
     def start(self, join: bool = False):
