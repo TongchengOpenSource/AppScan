@@ -94,6 +94,7 @@ AppScan 这款隐私合规检测工具, 它是一款基于动态分析, 可以
 - wxid_yrhfgzsdjoj422
 
 ## 404星链计划
-<img src lazysrc="https://github.com/knownsec/404StarLink-Project/raw/master/logo.png" width="30%">
+
+<img src="https://github.com/knownsec/404StarLink-Project/raw/master/logo.png" width="30%">
 
 AppScan 现已加入 [404星链计划](https://github.com/knownsec/404StarLink)
