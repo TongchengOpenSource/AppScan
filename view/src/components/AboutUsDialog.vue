@@ -26,13 +26,21 @@
             </td>
           </tr>
           <tr>
+            <th>项目地址</th>
+            <td @click="openIssues">{{ synopsis.github }}</td>
+          </tr>
+          <tr>
+            <th>下载地址</th>
+            <td @click="openIssues">{{ synopsis.download }}</td>
+          </tr>
+          <tr>
             <th>反馈问题</th>
             <td @click="openIssues">{{ synopsis.link }}</td>
           </tr>
         </table>
       </q-card-section>
 
-      <q-card-section>
+      <!-- <q-card-section>
         <div class="text-subtitle1 text-grey-8">版本信息</div>
         <span class="text-body2">下面是AppScan的更新版本:</span>
       </q-card-section>
@@ -52,7 +60,7 @@
             </li>
           </ul>
         </q-scroll-area>
-      </q-card-section>
+      </q-card-section> -->
     </q-card>
   </q-dialog>
 </template>
@@ -78,26 +86,28 @@ export default defineComponent({
       introduce:
         "一款自动化隐私检测工具,基于动态分析,可以精准定位APP的违规风险点",
       link: "https://github.com/tongcheng-security-team/AppScan/issues",
+      download: "https://github.com/TongchengOpenSource/AppScan/releases",
+      github: "https://github.com/TongchengOpenSource/AppScan",
     });
     // 获取版本数据
     synopsis.version = getVersion();
 
-    //获取历史数据;
-    getHistory()
-      .then((res) => {
-        if (res.code == 200) {
-          history.data = res.result;
-        }
-      })
-      .catch((rej) => {
-        console.log("请求版本信息失败:" + rej);
-      });
-    getHistory();
+    // //获取历史数据;
+    // getHistory()
+    //   .then((res) => {
+    //     if (res.code == 200) {
+    //       history.data = res.result;
+    //     }
+    //   })
+    //   .catch((rej) => {
+    //     console.log("请求版本信息失败:" + rej);
+    //   });
+    // getHistory();
     return {
       alert,
       synopsis,
       history,
-      getHistory,
+      // getHistory,
       openIssues,
     };
   },

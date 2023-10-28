@@ -1,9 +1,9 @@
 {
   "name": "app-scan",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "自动化隐私检测工具",
   "productName": "app-scan",
-  "author": "liang.che <liang.che@ly.com>",
+  "author": "TongchengSecurityTeam <anquan@ly.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",

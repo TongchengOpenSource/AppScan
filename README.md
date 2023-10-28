@@ -35,6 +35,15 @@ AppScan 这款隐私合规检测工具, 它是一款基于动态分析, 可以
 - android: 8.x及以上
 - app: 64位/未加固(有时候引入的第三方sdk也会自带一些反检测功能)
 
+## 模拟器
+根据 https://github.com/TongchengOpenSource/AppScan/discussions/29 的投票结果, 我们对MuMu和雷神进行了适配工作
+目前模拟器支持未完全上线, 用户可在 release 中下载pre版本进行测试
+目前支持的模拟器
+- 雷神模拟器9(需要在 设置-其他设置 中开启root权限, 设置ADB调试为'开启本地连接')
+
+目前暂不支持的模拟器
+- MuMu模拟器12(未找到ADB开关, 导致ADB无法识别到设备)
+
 ## 使用文档
 > 使用者查看此文档即可
 
@@ -42,6 +51,7 @@ AppScan 这款隐私合规检测工具, 它是一款基于动态分析, 可以
 
 ## 开发文档
 > 开发者需要额外查看文档
+
 ### 架构
 👽[架构说明](./doc/architecture.md)
 
@@ -83,3 +93,9 @@ AppScan 这款隐私合规检测工具, 它是一款基于动态分析, 可以
 - FW5215118
 - mOan1215
 - wxid_yrhfgzsdjoj422
+
+## 404星链计划
+
+<img src="https://github.com/knownsec/404StarLink-Project/raw/master/logo.png" width="30%">
+
+AppScan 现已加入 [404星链计划](https://github.com/knownsec/404StarLink)
