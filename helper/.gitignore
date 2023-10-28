@@ -36,3 +36,8 @@ ENV/
 
 *.pcap
 *.out
+
+# static
+static/gadget-android-arm64.so
+static/hluda-server-arm64
+static/hluda-server-x86

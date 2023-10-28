@@ -8,13 +8,13 @@
 
 > <https://github.com/hzzheyang/strongR-frida-android/releases>
 
-15.2.2
+16.1.4
 
 # adb version
 
 > <https://developer.android.com/studio/releases/platform-tools>
 
-33.0.3
+RC34.0.5
 
 # powered by
 
@@ -35,10 +35,10 @@ pyinstaller ./main.spec
 
 # server start
 
-adb shell "su -c '/data/local/tmp/frida-server-16.0.7-android-arm64 &'"
+adb shell "su -c '/data/local/tmp/frida-server-arm64 &'"
 
 # kill frida-server
 
 > <https://blog.csdn.net/yizhuanlu9607/article/details/85101860>
 
-adb shell "su -c 'killall -9 frida-server-16.0.7-android-arm64'"
+adb shell "su -c 'killall -9 frida-server-arm64'"

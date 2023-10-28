@@ -36,8 +36,8 @@ if platform.system().lower() == "darwin":
         + os.sep
         + "adb"
     )  # 默认mac环境
-frida_server_arm = "hluda-server-15.2.2-arm64"
-frida_server_x86 = "hluda-server-15.2.2-x86"
+frida_server_arm = "hluda-server-arm64"
+frida_server_x86 = "hluda-server-x86"
 # 根据手机架构选择 frida-server, arm和x86
 # 兼容模拟器
 detecting_phone_architecture_cmd = [adb_path, "shell", "su -c 'getprop ro.product.cpu.abi'"]
@@ -115,8 +115,8 @@ def generation_cmd():
             + os.sep
             + "adb"
         )  # 默认mac环境
-    frida_server_arm = "hluda-server-15.2.2-arm64"
-    frida_server_x86 = "hluda-server-15.2.2-x86"
+    frida_server_arm = "hluda-server-arm64"
+    frida_server_x86 = "hluda-server-x86"
     # 根据手机架构选择 frida-server, arm和x86
     # 兼容模拟器
     detecting_phone_architecture_cmd = [adb_path, "shell", "su -c 'getprop ro.product.cpu.abi'"]

@@ -4,6 +4,32 @@
 ### 前置条件
 - 本地安装python版本为3.10.X
 
+### 解压static
+> 因为github上传文件大小限制, 所以将static文件夹下的静态资源文件压缩成了static.7z, 需要解压才可以正常跑起来代码
+
+1. 进入helper/static目录
+2. 通过解压软件解压static.7z文件到**当前目录(static)**
+3. 解压后的文件夹结构如下
+```
+$ tree
+.
+├── darwin
+│   └── adb
+├── gadget-android-arm64.so
+├── hluda-server-arm64
+├── hluda-server-x86
+├── sdk.json
+├── static.7z
+└── windows
+    ├── adb.exe
+    ├── AdbWinApi.dll
+    └── AdbWinUsbApi.dll
+
+3 directories, 9 files
+
+```
+此时可删除static.7z文件
+
 ### 安装依赖
 1. 进入helper目录
 2. 打开命令行(或者使用vscode等专业软件打开文件夹)
@@ -14,6 +40,7 @@
 
 ### 启动
 > websocket 可以通过 postman 或在线网站 http://www.websocket-test.com/ 进行连接和调试
+
 1. 根据 [api](./api.md) 进行API调试
 
 ## view
