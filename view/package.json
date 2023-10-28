@@ -1,6 +1,6 @@
 {
   "name": "app-scan",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "自动化隐私检测工具",
   "productName": "app-scan",
   "author": "TongchengSecurityTeam <anquan@ly.com>",
