@@ -48,7 +48,7 @@ async def getApps():
                 {
                     "name": i.name,
                     "package": i.identifier,
-                    "version": i.parameters["version"],
+                    "version": i.parameters.get("version", "-"),
                     "icon": i.parameters["icons"][0]["image"],
                 }
             )
@@ -57,7 +57,7 @@ async def getApps():
                 {
                     "name": i.name,
                     "package": i.identifier,
-                    "version": i.parameters["version"],
+                    "version": i.parameters.get("version", "-"),
                     "icon": "",
                 }
             )
