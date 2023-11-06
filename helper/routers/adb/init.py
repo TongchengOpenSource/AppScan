@@ -4,6 +4,7 @@ import platform
 import subprocess
 from copy import deepcopy
 from fastapi import APIRouter
+from pydantic import BaseModel
 
 from internal.response.model import (
     ApiBaseResponse,
@@ -15,143 +16,6 @@ from internal.response.model import (
 )
 
 router = APIRouter(prefix="/adb/init")
-
-adb_path = (
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-    + os.sep
-    + "static"
-    + os.sep
-    + "windows"
-    + os.sep
-    + "adb.exe"
-)  # default windows
-if platform.system().lower() == "darwin":
-    # mac 环境
-    adb_path = (
-        os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-        + os.sep
-        + "static"
-        + os.sep
-        + "darwin"
-        + os.sep
-        + "adb"
-    )  # 默认mac环境
-frida_server_arm = "hluda-server-arm64"
-frida_server_x86 = "hluda-server-x86"
-# 根据手机架构选择 frida-server, arm和x86
-# 兼容模拟器
-detecting_phone_architecture_cmd = [adb_path, "shell", "su -c 'getprop ro.product.cpu.abi'"]
-frida_server = ""
-frida_path = (
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-    + os.sep
-    + "static"
-    + os.sep
-    + frida_server
-)
-colse_SELinux_cmd = [adb_path, "shell", "su -c 'setenforce 0'"]
-kill_cmd = [adb_path, "shell", "su -c 'pkill -9 hluda'"]
-clean_cmd = [adb_path, "shell", "su -c 'rm -rf /data/local/tmp/*'"]
-push_cmd = [adb_path, "push", frida_path, "/storage/emulated/0/{}".format(frida_server)]
-mv_cmd = [
-    adb_path,
-    "shell",
-    "su -c 'mv /storage/emulated/0/{} /data/local/tmp/'".format(frida_server),
-]
-chmod_cmd = [
-    adb_path,
-    "shell",
-    "su -c 'chmod 777 /data/local/tmp/{}'".format(frida_server),
-]
-run_cmd = [adb_path, "shell", "su -c 'nohup /data/local/tmp/{} &'".format(frida_server)]
-devices_cmd = [adb_path, "devices"]
-root_cmd = [adb_path, "shell", "su -c 'exit'"]
-stop_adb_cmd = [adb_path, "kill-server"]
-start_adb_cmd = [adb_path, "start-server"]
-# https://github.com/frida/frida/issues/1788
-close_usap_cmd = [
-    adb_path,
-    "shell",
-    "su -c 'setprop persist.device_config.runtime_native.usap_pool_enabled false'",
-]
-
-def generation_cmd():
-    # 重新生成cmd
-    global adb_path
-    global frida_server
-    global frida_path
-    global colse_SELinux_cmd
-    global kill_cmd
-    global clean_cmd
-    global push_cmd
-    global mv_cmd
-    global chmod_cmd
-    global run_cmd
-    global devices_cmd
-    global root_cmd
-    global stop_adb_cmd
-    global start_adb_cmd
-    global close_usap_cmd
-    global detecting_phone_architecture_cmd
-    global frida_server_arm
-    global frida_server_x86
-    adb_path = (
-        os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-        + os.sep
-        + "static"
-        + os.sep
-        + "windows"
-        + os.sep
-        + "adb.exe"
-    )  # default windows
-    if platform.system().lower() == "darwin":
-        # mac 环境
-        adb_path = (
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-            + os.sep
-            + "static"
-            + os.sep
-            + "darwin"
-            + os.sep
-            + "adb"
-        )  # 默认mac环境
-    frida_server_arm = "hluda-server-arm64"
-    frida_server_x86 = "hluda-server-x86"
-    # 根据手机架构选择 frida-server, arm和x86
-    # 兼容模拟器
-    detecting_phone_architecture_cmd = [adb_path, "shell", "su -c 'getprop ro.product.cpu.abi'"]
-    frida_path = (
-        os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-        + os.sep
-        + "static"
-        + os.sep
-        + frida_server
-    )
-    colse_SELinux_cmd = [adb_path, "shell", "su -c 'setenforce 0'"]
-    kill_cmd = [adb_path, "shell", "su -c 'pkill -9 hluda'"]
-    clean_cmd = [adb_path, "shell", "su -c 'rm -rf /data/local/tmp/*'"]
-    push_cmd = [adb_path, "push", frida_path, "/storage/emulated/0/{}".format(frida_server)]
-    mv_cmd = [
-        adb_path,
-        "shell",
-        "su -c 'mv /storage/emulated/0/{} /data/local/tmp/'".format(frida_server),
-    ]
-    chmod_cmd = [
-        adb_path,
-        "shell",
-        "su -c 'chmod 777 /data/local/tmp/{}'".format(frida_server),
-    ]
-    run_cmd = [adb_path, "shell", "su -c 'nohup /data/local/tmp/{} &'".format(frida_server)]
-    devices_cmd = [adb_path, "devices"]
-    root_cmd = [adb_path, "shell", "su -c 'exit'"]
-    stop_adb_cmd = [adb_path, "kill-server"]
-    start_adb_cmd = [adb_path, "start-server"]
-    # https://github.com/frida/frida/issues/1788
-    close_usap_cmd = [
-        adb_path,
-        "shell",
-        "su -c 'setprop persist.device_config.runtime_native.usap_pool_enabled false'",
-    ]
 
 def detecting_phone_architecture():
     # 检测手机架构
@@ -166,8 +30,15 @@ def detecting_phone_architecture():
         raise Exception("手机架构不支持", outdata)
     return frida_server
 
+class InitItem(BaseModel):
+    DevicesArchitecture: str = ""  # arm/x86
+    IsRemoteDevices: bool = False  # 是否是远程设备
+    RemoteDevicesIP: str  = ""  # 远程设备IP
+    RemoteDevicesPort: int = ""  # 远程设备端口
+    IsNeedSU: bool = True  # 是否需要su才能申请root权限(正常需要, 特殊rom不需要)
+
 @router.post("", response_model=ApiBaseResponse, response_model_exclude_unset=False)
-async def init():
+async def init(item: InitItem):
     res = deepcopy(OK)
     try:
         # https://github.com/zhengjim/camille/pull/32/commits/1be9236d7b0d8d4369ba0e0e84df5c660dc35c87
