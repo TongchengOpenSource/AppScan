@@ -31,7 +31,7 @@ contextBridge.exposeInMainWorld("systemApi", {
     return await ipcRenderer.send("checkForUpdate", bySelf);
   },
   //打开文档
-  openDocs: () => ipcRenderer.send("open-url", "https://appscan.ly.com"),
+  openDocs: () => ipcRenderer.send("open-url", "https://github.com/TongchengOpenSource/AppScan/wiki"),
   //打开issues
   openIssues: () =>
     ipcRenderer.send(
