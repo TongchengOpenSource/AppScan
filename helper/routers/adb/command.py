@@ -11,17 +11,18 @@ class Command:
         self._is_need_su = IsNeedSU
 
         # 对外暴露的command
-        self.stop_adb_cmd = ""
-        self.start_adb_cmd = ""
-        self.devices_cmd = ""
-        self.colse_SELinux_cmd = ""
-        self.close_usap_cmd = ""
-        self.kill_cmd = ""
-        self.clean_cmd = ""
-        self.push_cmd = ""
-        self.mv_cmd = ""
-        self.chmod_cmd = ""
-        self.run_cmd = ""
+        self.connect_remote_cmd = []
+        self.stop_adb_cmd = []
+        self.start_adb_cmd = []
+        self.devices_cmd = []
+        self.colse_SELinux_cmd = []
+        self.close_usap_cmd = []
+        self.kill_cmd = []
+        self.clean_cmd = []
+        self.push_cmd = []
+        self.mv_cmd = []
+        self.chmod_cmd = []
+        self.run_cmd = []
     
     # 根据配置生成合适的cmd命令
     def detecting(self):
@@ -48,6 +49,11 @@ class Command:
                 + os.sep
                 + "adb.exe"
             )
+        # 远程remote连接
+        if self._is_remote_devices:
+            self.connect_remote_cmd = [adb_path, "connect", "{}:{}".format(self._remote_devices_ip, self._remote_devices_port)]
+        else:
+            self.connect_remote_cmd = []
         # 目前可以确定的命令
         self.stop_adb_cmd = [adb_path, "kill-server"]
         self.start_adb_cmd = [adb_path, "start-server"]
@@ -65,6 +71,50 @@ class Command:
             + os.sep
             + frida_server
         )
-
-
-
+        if self._is_need_su:
+            self.colse_SELinux_cmd = [adb_path, "shell", "su -c 'setenforce 0'"]
+            self.kill_cmd = [adb_path, "shell", "su -c 'pkill -9 hluda'"]
+            self.clean_cmd = [adb_path, "shell", "su -c 'rm -rf /data/local/tmp/*'"]
+            self.mv_cmd = [
+                adb_path,
+                "shell",
+                "su -c 'mv /storage/emulated/0/{} /data/local/tmp/'".format(frida_server),
+            ]
+            self.chmod_cmd = [
+                adb_path,
+                "shell",
+                "su -c 'chmod 777 /data/local/tmp/{}'".format(frida_server),
+            ]
+            self.run_cmd = [adb_path, "shell", "su -c 'nohup /data/local/tmp/{} &'".format(frida_server)]
+            self.devices_cmd = [adb_path, "devices"]
+            self.root_cmd = [adb_path, "shell", "su -c 'exit'"]
+            # https://github.com/frida/frida/issues/1788
+            self.close_usap_cmd = [
+                adb_path,
+                "shell",
+                "su -c 'setprop persist.device_config.runtime_native.usap_pool_enabled false'",
+            ]
+        else:
+            self.colse_SELinux_cmd = [adb_path, "shell", "-c 'setenforce 0'"]
+            self.kill_cmd = [adb_path, "shell", "-c 'pkill -9 hluda'"]
+            self.clean_cmd = [adb_path, "shell", "-c 'rm -rf /data/local/tmp/*'"]
+            self.mv_cmd = [
+                adb_path,
+                "shell",
+                "-c 'mv /storage/emulated/0/{} /data/local/tmp/'".format(frida_server),
+            ]
+            self.chmod_cmd = [
+                adb_path,
+                "shell",
+                "-c 'chmod 777 /data/local/tmp/{}'".format(frida_server),
+            ]
+            self.run_cmd = [adb_path, "shell", "-c 'nohup /data/local/tmp/{} &'".format(frida_server)]
+            self.devices_cmd = [adb_path, "devices"]
+            self.root_cmd = [adb_path, "shell", "-c 'exit'"]
+            # https://github.com/frida/frida/issues/1788
+            self.close_usap_cmd = [
+                adb_path,
+                "shell",
+                "-c 'setprop persist.device_config.runtime_native.usap_pool_enabled false'",
+            ]
+        self.push_cmd = [adb_path, "push", frida_path, "/storage/emulated/0/{}".format(frida_server)]
