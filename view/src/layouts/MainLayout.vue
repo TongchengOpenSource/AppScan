@@ -199,75 +199,7 @@
   <!-- 关于我们的弹窗 -->
   <AboutUsDialog ref="aboutUs"></AboutUsDialog>
   <!-- 设置弹窗 -->
-  <q-dialog
-    v-model="settingDialog"
-    @hide="hideSettingDialog"
-    @before-show="showSettingDialog"
-  >
-    <q-card style="min-width: 350px">
-      <q-card-section>
-        <div class="text-h6">高级设置</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        <div class="q-mx-auto">
-          <div class="q-gutter-sm row items-center q-mb-lg">
-            <q-icon name="help" size="xs" color="grey">
-              <q-tooltip anchor="top middle" self="center middle">
-                <strong>
-                  appScan检测软件使用的引擎,
-                  默认使用通用引擎,如出现app闪退和抓取不到数据等异常情况可尝试使用特殊引擎
-                </strong>
-              </q-tooltip>
-            </q-icon>
-            <span class="col"><strong>检测引擎：</strong></span>
-            <q-radio
-              v-model="engineSelect"
-              val="default"
-              label="通用"
-              size="xs"
-              class="col"
-            />
-            <q-radio
-              v-model="engineSelect"
-              val="custom"
-              label="特殊"
-              size="xs"
-              class="col"
-            />
-          </div>
-          <div class="q-gutter-sm row items-center">
-            <q-icon name="help" size="xs" color="grey">
-              <q-tooltip anchor="top middle" self="center middle">
-                <strong
-                  >检测引擎插桩在app启动时的插桩时机, 默认0s即启动时立刻插桩,
-                  如出现插桩失败获取不到数据时可尝试放开时间</strong
-                >
-              </q-tooltip>
-            </q-icon>
-            <span class="col-4"><strong>等待时间：</strong></span>
-            <q-slider
-              v-model="waitTime"
-              :min="0"
-              :max="5"
-              :label-value="waitTime + 's'"
-              label
-              color="primary"
-              switch-label-side
-              switch-marker-labels-side
-              class="col"
-              markers
-            />
-          </div>
-        </div>
-      </q-card-section>
-
-      <q-card-actions class="text-primary row justify-evenly">
-        <q-btn flat label="取消" v-close-popup />
-        <q-btn flat label="保存" @click="saveSetting" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+  <SettingModal ref="setting"></SettingModal>
   <!-- 错误信息提交弹窗 -->
   <errorSubmitDialog ref="errorSubmitDialogRef"></errorSubmitDialog>
 </template>
@@ -282,6 +214,8 @@ import { useAppInfoStore } from "stores/app-info";
 import AboutUsDialog from "src/components/AboutUsDialog.vue";
 // 错误提交组件
 import errorSubmitDialog from "../components/errorSubmitDialog.vue";
+// 设置组件
+import SettingModal from "../components/SettingModal.vue";
 
 let activeMenu = ref("privacy");
 let updating = ref(false);
@@ -373,7 +307,7 @@ export default defineComponent({
     }
     // 设置弹窗
     function openSetting() {
-      settingDialog.value = true;
+      setting.value.visible = true;
     }
     // 保存设置(存储mode、waitTime)
     function saveSetting() {

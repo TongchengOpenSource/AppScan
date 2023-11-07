@@ -39,28 +39,6 @@
           </tr>
         </table>
       </q-card-section>
-
-      <!-- <q-card-section>
-        <div class="text-subtitle1 text-grey-8">版本信息</div>
-        <span class="text-body2">下面是AppScan的更新版本:</span>
-      </q-card-section>
-      <q-card-section class="q-pt-none">
-        <q-scroll-area class="scroll-area" delay="1200">
-          <ul class="scroll-ul">
-            <li v-for="(item, index) in history.data" :key="index">
-              <span class="text-grey-6">({{ item.releaseDate }})</span>
-              版本号:
-              <span class="text-blue-7">{{ item.release }}</span>
-              更新信息:
-              <ul>
-                <li v-for="(operate, index) in item.operates" :key="index">
-                  {{ operate }}
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </q-scroll-area>
-      </q-card-section> -->
     </q-card>
   </q-dialog>
 </template>
@@ -92,22 +70,10 @@ export default defineComponent({
     // 获取版本数据
     synopsis.version = getVersion();
 
-    // //获取历史数据;
-    // getHistory()
-    //   .then((res) => {
-    //     if (res.code == 200) {
-    //       history.data = res.result;
-    //     }
-    //   })
-    //   .catch((rej) => {
-    //     console.log("请求版本信息失败:" + rej);
-    //   });
-    // getHistory();
     return {
       alert,
       synopsis,
       history,
-      // getHistory,
       openIssues,
     };
   },
