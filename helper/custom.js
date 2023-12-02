@@ -278,6 +278,9 @@ function getSystemData() {
     hook('android.provider.Settings$System', [
         {'methodName': 'getString', 'args': ['android_id'], 'action': action, 'messages': '获取安卓ID'}
     ]);
+    hook('android.provider.Settings$NameValueCache', [
+        {'methodName': 'getStringForUser', 'action': action, 'messages': '获取安卓ID'},
+    ]);
 
 
     hook('android.os.Build', [
@@ -390,6 +393,11 @@ function getPackageManager() {
         {'methodName': 'getRunningAppProcesses', 'action': action, 'messages': '获取了正在运行的App'},
         {'methodName': 'getRunningServiceControlPanel', 'action': action, 'messages': '获取了正在运行的服务面板'},
     ]);
+
+    hook('android.app.ApplicationPackageManager', [
+        {'methodName': 'getPackageInfoAsUser', 'action': action, 'messages': '获取已安装的app信息'},
+    ])
+
     //需排除应用本身
     hookApplicationPackageManagerExceptSelf('getApplicationInfo', action);
     hookApplicationPackageManagerExceptSelf('getPackageInfoAsUser', action);
@@ -546,10 +554,13 @@ function getFileMessage() {
     hook('java.io.RandomAccessFile', [
         {'methodName': '$init', 'action': action, 'messages': 'RandomAccessFile写文件'}
     ]);
-    hook('java.io.File', [
-        {'methodName': 'mkdirs', 'action': action, 'messages': '尝试写入sdcard创建小米市场审核可能不通过'},
-        {'methodName': 'mkdir', 'action': action, 'messages': '尝试写入sdcard创建小米市场审核可能不通过'}
-    ]);
+    hook('android.os.Environment', [
+        {'methodName': 'getExternalStorageDirectory', 'action': action, 'messages': '读取手机外置存储信息'},
+    ])
+    // hook('java.io.File', [
+    //     {'methodName': 'mkdirs', 'action': action, 'messages': '尝试写入sdcard创建小米市场审核可能不通过'},
+    //     {'methodName': 'mkdir', 'action': action, 'messages': '尝试写入sdcard创建小米市场审核可能不通过'}
+    // ]);
 }
 
 //获取麦克风信息

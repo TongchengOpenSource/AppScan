@@ -897,6 +897,7 @@ const sdk = [
   { sdk_name: "高德SDK", package_name: "com.amap.api." },
   { sdk_name: "智齿客服SDK", package_name: "com.sobot.chat" },
   { sdk_name: "科大讯飞	SDK", package_name: "com.iflytek." },
+  { sdk_name: "QuickGame SDK", package_name: "com.quickgamesdk." },
 ];
 
 function getSdkNameByPackage(package_name) {
