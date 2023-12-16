@@ -268,9 +268,9 @@ function getSystemData() {
     hook('android.provider.Settings$System', [
         {'methodName': 'getString', 'args': ['android_id'], 'action': action, 'messages': '获取安卓ID'}
     ]);
-    hook('android.provider.Settings$NameValueCache', [
-        {'methodName': 'getStringForUser', 'action': action, 'messages': '获取安卓ID'},
-    ]);
+    // hook('android.provider.Settings$NameValueCache', [
+    //     {'methodName': 'getStringForUser', 'action': action, 'messages': '获取安卓ID'},
+    // ]);
 
 
 
