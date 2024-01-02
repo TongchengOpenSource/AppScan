@@ -42,7 +42,7 @@ https://github.com/TongchengOpenSource/AppScan/discussions/51
 根据 https://github.com/TongchengOpenSource/AppScan/discussions/29 的投票结果, 我们对MuMu和雷神进行了适配工作
 目前模拟器支持未完全上线, 用户可在 release 中下载pre版本进行测试
 目前支持的模拟器
-- 雷神模拟器9(需要在 设置-其他设置 中开启root权限, 设置ADB调试为'开启本地连接')
+- 雷电模拟器9(需要在 设置-其他设置 中开启root权限, 设置ADB调试为'开启本地连接')
 
 目前暂不支持的模拟器
 - MuMu模拟器12(通过remote adb链接, 功能正在开发中)
