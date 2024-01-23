@@ -75,7 +75,7 @@ close_usap_cmd = [
     "su -c 'setprop persist.device_config.runtime_native.usap_pool_enabled false'",
 ]
 
-def generation_cmd():
+def generation_simulator_cmd():
     # 重新生成cmd
     global adb_path
     global frida_server
@@ -188,7 +188,7 @@ async def init():
         time.sleep(2)
         # 获取手机架构
         detecting_phone_architecture()
-        generation_cmd()
+        generation_simulator_cmd()
         # 清理数据
         subprocess.call(clean_cmd)
         # 推送 frida-server 到设备
