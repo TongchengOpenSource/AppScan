@@ -167,7 +167,7 @@ async function makeData(id) {
     if (data.mark[list[index].page]) {
       data.mark[list[index].page].push(list[index]);
     } else {
-      data.mark[list[index].page] = [];
+      data.mark[list[index].page] = [list[index]];
     }
   }
 }
