@@ -421,7 +421,7 @@ function getGSP() {
         {'methodName': 'getProvider', 'action': action, 'messages': action},
         {'methodName': 'getSpeed', 'action': action, 'messages': action},
         {'methodName': 'getSpeedAccuracyMetersPerSecond', 'action': action, 'messages': action},
-        {'methodName': 'getTime', 'action': action, 'messages': action},
+        // {'methodName': 'getTime', 'action': action, 'messages': action},
         {'methodName': 'getVerticalAccuracyMeters', 'action': action, 'messages': action},
     ]);
 
