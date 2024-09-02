@@ -14,7 +14,7 @@
 
 > <https://developer.android.com/studio/releases/platform-tools>
 
-RC34.0.5
+35.0.2
 
 # powered by
 
