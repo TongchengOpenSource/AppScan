@@ -29,6 +29,9 @@ AppScan 这款隐私合规检测工具, 它是一款基于动态分析, 可以
 ## 关于暂时停止发布MacOs官方安装包的公告
 https://github.com/TongchengOpenSource/AppScan/discussions/51
 
+## [重要] appScan运行需要清空手机 /data/local/tmp/ 下所有文件
+因运行需要, 目前appScan在初始化过程中需要清空手机目录 /data/local/tmp/ 下的所有文件, 如您有重要文件在此目录下, 请先自行备份, 防止丢失, 感谢理解
+
 ## 安装指南
 ⬇️[下载地址](https://github.com/tongcheng-security-team/AppScan/releases)
 
